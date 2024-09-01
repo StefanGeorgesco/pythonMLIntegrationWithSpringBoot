@@ -13,7 +13,7 @@ public class PredictSimpleController {
 
     private final PythonService pythonService;
 
-    public PredictSimpleController(PythonServiceApacheCommonImpl pythonService) {
+    public PredictSimpleController(PythonServiceProcessBuilderImpl pythonService) {
         this.pythonService = pythonService;
     }
 
