@@ -15,8 +15,8 @@ public class PretrainModelServiceImpl implements PretrainModelService {
 
     @Override
     public String recogniseImage(byte[] nameOfFile , String nameOfModel) {
+        Tensor<Float> input = reshape(nameOfFile);
         model = SavedModelBundle.load("resnet.h5", "serve");
-        Tensor<Float> input = Tensor.create(nameOfFile, Float.class);
         Tensor<Float> output = model
                 .session()
                 .runner()
@@ -30,23 +30,6 @@ public class PretrainModelServiceImpl implements PretrainModelService {
         return "rrr";
     }
 
-    /**
-     *    public float[] predict(float[] input) {
-     *         Tensor<Float> inputTensor = Tensor.create(input, Float.class);
-     *         Tensor<Float> outputTensor = model.session().runner()
-     *                 .feed("input", inputTensor)
-     *                 .fetch("output")
-     *                 .run()
-     *                 .get(0)
-     *                 .expect(Float.class);
-     *
-     *         float[] output = new float[outputTensor.shape()[1]];
-     *         outputTensor.copyTo(output);
-     *         return output;
-     *     }
-     * @param image
-     * @return
-     */
 
     @Override
     public String savedTempImage(byte[] image) {
@@ -59,5 +42,31 @@ public class PretrainModelServiceImpl implements PretrainModelService {
                 e.printStackTrace();
             }
             return tempFileName;
+    }
+    public static Tensor<Float> reshape (byte[] nameOfFile){
+        // Reshape the byte array to a 4D tensor
+        Tensor<Float> input = Tensor.create(new long[]{1, 224, 224, 3}, Float.class);
+        float[] pixels = new float[224 * 224 * 3];
+        for (int i = 0; i < nameOfFile.length; i += 3) {
+            int r = nameOfFile[i] & 0xFF;
+            int g = nameOfFile[i + 1] & 0xFF;
+            int b = nameOfFile[i + 2] & 0xFF;
+            pixels[i / 3] = (float) r / 255.0f;
+            pixels[i / 3 + 1] = (float) g / 255.0f;
+            pixels[i / 3 + 2] = (float) b / 255.0f;
+        }
+        input.copyTo(pixels);
+        return input;
+    }
+    public static int argmax(byte[] array) {
+        int maxIndex = 0;
+        float maxValue = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] > maxValue) {
+                maxIndex = i;
+                maxValue = array[i];
+            }
+        }
+        return maxIndex;
     }
 }
