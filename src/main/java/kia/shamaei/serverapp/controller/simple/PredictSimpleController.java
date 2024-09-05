@@ -1,10 +1,8 @@
-package kia.shamaei.serverapp.controller;
+package kia.shamaei.serverapp.controller.simple;
 
 
-import kia.shamaei.serverapp.controller.dto.PredictResponseDto;
-import kia.shamaei.serverapp.service.PythonService;
-import kia.shamaei.serverapp.service.PythonServiceApacheCommonImpl;
-import kia.shamaei.serverapp.service.PythonServiceProcessBuilderImpl;
+import kia.shamaei.serverapp.service.simple.PythonService;
+import kia.shamaei.serverapp.service.simple.PythonServiceProcessBuilderImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

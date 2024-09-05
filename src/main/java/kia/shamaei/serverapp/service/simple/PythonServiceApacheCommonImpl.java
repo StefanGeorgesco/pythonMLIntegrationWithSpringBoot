@@ -1,20 +1,18 @@
-package kia.shamaei.serverapp.service;
+package kia.shamaei.serverapp.service.simple;
 
-import kia.shamaei.serverapp.controller.dto.PredictResponseDto;
+import kia.shamaei.serverapp.service.simple.PythonService;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
 
 /**
  * Service class for making predictions using a Python script.
  */
 @Service
-public class PythonServiceApacheCommonImpl implements PythonService{
+public class PythonServiceApacheCommonImpl implements PythonService {
     /**
      * Executes a Python script to predict a value based on the given input.
      *

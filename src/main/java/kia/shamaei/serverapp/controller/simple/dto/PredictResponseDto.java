@@ -1,4 +1,4 @@
-package kia.shamaei.serverapp.controller.dto;
+package kia.shamaei.serverapp.controller.simple.dto;
 
 
 public class PredictResponseDto {
