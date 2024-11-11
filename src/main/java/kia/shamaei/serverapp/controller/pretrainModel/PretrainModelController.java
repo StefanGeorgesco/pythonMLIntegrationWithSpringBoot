@@ -1,4 +1,4 @@
-package kia.shamaei.serverapp.controller.vgg;
+package kia.shamaei.serverapp.controller.pretrainModel;
 
 
 import kia.shamaei.serverapp.service.pretrainModel.PretrainModelService;

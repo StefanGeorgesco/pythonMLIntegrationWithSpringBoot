@@ -1,8 +1,10 @@
 package kia.shamaei.serverapp.controller.simple;
 
 
+import kia.shamaei.serverapp.controller.simple.dto.PredictQueryDto;
+import kia.shamaei.serverapp.controller.simple.dto.PredictResponseDto;
 import kia.shamaei.serverapp.service.simple.PythonService;
-import kia.shamaei.serverapp.service.simple.PythonServiceProcessBuilderImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,15 +13,13 @@ public class PredictSimpleController {
 
     private final PythonService pythonService;
 
-    public PredictSimpleController(PythonServiceProcessBuilderImpl pythonService) {
+    public PredictSimpleController(PythonService pythonService) {
         this.pythonService = pythonService;
     }
 
-    @GetMapping("/{input}")
-    public double predict(@PathVariable String  input) {
-        System.out.println("log");
-        return pythonService.predict(input); // Predict using the Python model
+    @PostMapping
+    public ResponseEntity<PredictResponseDto> predict(@RequestBody PredictQueryDto predictQueryDto) {
+        String input = predictQueryDto.input();
+        return ResponseEntity.ok(new PredictResponseDto(Double.parseDouble(input), pythonService.predict(input)));
     }
-
-
 }
